@@ -119,7 +119,36 @@
     .explore h3 { font-size:1.17rem; margin:0 0 5px; }
     .explore p { margin:0; color:#536a65; font-size:.86rem; }
     .chips { display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end; }
-    .chip { border:1px solid #bad1c8; background:#f7fbf8; color:#31584d; padding:7px 11px; border-radius:99px; font-size:.78rem; }
+    .chip { border:1px solid #bad1c8; background:#f7fbf8; color:#31584d; padding:7px 11px; border-radius:99px; font-size:.78rem; cursor:pointer; }
+    .btn-group { display:flex; gap:9px; }
+    .btn-group .draw-btn { padding:0 17px; }
+    .select-btn { border:1px solid #d8a14e; height:53px; padding:0 17px; border-radius:12px; background:#fff; color:#9c5e0c; font-weight:800; white-space:nowrap; transition:.18s transform,.18s background; }
+    .select-btn:hover { background:#fff3df; transform:translateY(-2px); }
+    .city-modal { position:fixed; inset:0; z-index:100; }
+    .city-modal[hidden] { display:none; }
+    .modal-backdrop { position:absolute; inset:0; background:rgba(7,20,34,.55); backdrop-filter:blur(2px); }
+    .modal-dialog { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:min(940px, calc(100% - 32px)); max-height:86vh; background:#fff; border-radius:22px; box-shadow:0 30px 80px rgba(5,20,35,.4); display:flex; flex-direction:column; overflow:hidden; }
+    .modal-head { display:flex; justify-content:space-between; align-items:flex-start; padding:22px 26px 16px; border-bottom:1px solid #edf0f2; }
+    .modal-head h3 { margin:0; font-size:1.3rem; letter-spacing:-.02em; }
+    .modal-head p { margin:5px 0 0; color:#7b8790; font-size:.85rem; }
+    .modal-close { width:38px; height:38px; border:1px solid #dfe4e7; border-radius:10px; background:#fff; font-size:1.3rem; color:#5b6b76; line-height:1; }
+    .modal-close:hover { background:#f3f6f7; }
+    .modal-search { padding:16px 26px 8px; }
+    .search-box { height:46px; border:1px solid #dce2e5; border-radius:12px; display:flex; align-items:center; padding:0 14px; gap:9px; background:#fbfcfc; }
+    .search-box:focus-within { border-color:#4786b2; box-shadow:0 0 0 3px #dcebf5; }
+    .search-box > span { color:#84919c; }
+    .modal-city-grid { padding:10px 26px 26px; overflow-y:auto; display:grid; grid-template-columns:repeat(3,1fr); gap:11px; }
+    .modal-city { text-align:left; border:1px solid #e0e5e8; border-radius:14px; background:#fff; padding:13px 15px; transition:.15s transform,.15s border,.15s background; }
+    .modal-city:hover { border-color:#e0a64f; background:#fff9f0; transform:translateY(-1px); }
+    .modal-city.active { border-color:var(--orange); background:#fff3e0; box-shadow:0 0 0 2px rgba(255,157,35,.25); }
+    .modal-city-head { display:flex; justify-content:space-between; align-items:baseline; gap:8px; }
+    .modal-city-name { font-weight:800; font-size:1.02rem; }
+    .modal-city-km { font-family:'DM Mono',monospace; color:#b96f12; font-size:.74rem; white-space:nowrap; }
+    .modal-city-tags { display:flex; flex-wrap:wrap; gap:5px; margin-top:8px; }
+    .modal-city-tags span { font-size:.67rem; color:#5d7483; background:#eef3f5; border-radius:5px; padding:3px 7px; }
+    .modal-empty { grid-column:1/-1; text-align:center; color:#8b979f; padding:44px 0; font-size:.9rem; }
+    @media (max-width:780px) { .btn-group { grid-column:1/-1; } .btn-group .draw-btn { flex:1; } .select-btn { flex:1; } .modal-city-grid { grid-template-columns:1fr; } .modal-dialog { width:calc(100% - 20px); } }
+    @media (max-width:450px) { .btn-group { flex-wrap:wrap; } .btn-group button { flex:1 1 100%; } }
     footer { border-top:1px solid #dce2df; padding:22px 0 39px; color:#7e898e; display:flex; justify-content:space-between; font-size:.75rem; }
     .fade { animation:fade .48s ease both; } @keyframes fade { from { opacity:.2; transform:translateY(8px) } to { opacity:1; transform:translateY(0) } }
     @media (max-width:780px) { nav,.hero-copy,.control-shell,main,footer { width:min(100% - 28px, 600px); } .hero { min-height:520px; } .hero-copy { padding-top:22px; } .control-shell { margin-top:-125px; } .control-panel { grid-template-columns:1fr 1fr; padding:15px; } .draw-btn { grid-column:span 2; } .winner { grid-template-columns:1fr; } .winner-stats { grid-template-columns:repeat(3,1fr); gap:12px; padding:20px 25px; } .tips,.city-dossier,.spot-grid,.route-grid { grid-template-columns:1fr; } .result-bar { align-items:flex-start; flex-direction:column; } .section-head { align-items:flex-start; flex-direction:column; } .explore { align-items:flex-start; flex-direction:column; } .chips { justify-content:flex-start; } footer { gap:12px; flex-direction:column; } }
@@ -140,7 +169,7 @@
       <div class="field"><label for="days">旅行天数</label><div class="input-wrap"><span>◷</span><input id="days" type="number" min="2" max="5" value="2" /></div></div>
       <div class="field"><label class="range-label" for="maxDistance">距北京范围 <b id="distanceLimit">≤ 500 km</b></label><div class="range-shell"><span>135</span><input id="maxDistance" type="range" min="135" max="500" step="5" value="500" aria-label="距北京最大距离" /><span>500</span></div></div>
       <div class="field"><label for="transport">固定出行方式</label><div class="input-wrap"><span>⌁</span><select id="transport"><option value="高铁">高铁</option><option value="自驾">自驾</option><option value="大巴">公共交通</option></select></div></div>
-      <button class="draw-btn" id="draw" type="button">抽一趟旅行</button>
+      <div class="btn-group"><button class="draw-btn" id="draw" type="button">抽一趟旅行</button><button class="select-btn" id="selectCity" type="button">自选城市</button></div>
     </section>
   </div>
   <main>
@@ -156,6 +185,14 @@
     <section class="explore"><div><h3>目的地池 · 31 座城市 / 地区</h3><p>覆盖北京周边约 500 公里内的历史、人文、山野与海岸旅行地。</p></div><div class="chips" id="chips"></div></section>
   </main>
   <footer><span>周末出发 · 目的地与行程为灵感参考</span><span>景区开放、预约与交通班次请以出行当日官方信息为准</span></footer>
+  <div class="city-modal" id="cityModal" hidden>
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-label="自选城市">
+      <div class="modal-head"><div><h3>自选城市</h3><p>直接点选目的地，不受随机抽选限制</p></div><button class="modal-close" id="modalClose" type="button" aria-label="关闭">×</button></div>
+      <div class="modal-search"><div class="search-box"><span>⌕</span><input id="citySearch" type="text" placeholder="搜索城市名或标签，如 古城 / 草原 / 海边" /></div></div>
+      <div class="modal-city-grid" id="modalCityGrid"></div>
+    </div>
+  </div>
   <script>
     const places = [
       {city:'承德', code:'CHENGDE', km:230, mode:'高铁', modes:['高铁','自驾'], tags:['皇家园林','长城','避暑'], desc:'皇家园林、寺庙群与燕山相接。适合用一个周末，在湖面、宫墙与山风之间慢慢走。', intro:'慢一点逛完一座山庄，再把长城的日落留给自己。', booking:'避暑山庄与外八庙建议分日安排；旺季提前预约。', key:'园林、长城、地方小吃、温柔山景。', routes:[['皇家园林慢游','避暑山庄 → 热河文庙 → 武烈河夜景','DAY 1 · 避暑山庄宫区与湖区，傍晚走武烈河。','DAY 2 · 普宁寺或小布达拉宫，午后返京。'],['金山岭日落线','金山岭长城 → 古北水镇 → 返京','DAY 1 · 午后登城，预留日落与下山时间。','DAY 2 · 逛古北水镇，傍晚返程。'],['山庄 + 寺庙深度线','避暑山庄 → 普陀宗乘之庙 → 承德老城','DAY 1 · 山庄全日，安排湖区游船或步行。','DAY 2 · 外八庙择二，尝一顿承德莜面。'] ]},
@@ -361,7 +398,7 @@
       '朔州': {mfw:'https://www.mafengwo.cn/search/q.php?q=%E6%9C%94%E5%B7%9E',spots:'崇福寺 → 弥陀殿 → 马邑博物馆 → 朔州老城 → 杀虎口 → 西口古道 → 右玉南山森林公园 → 应县木塔 → 净土寺 → 广武汉墓群 → 旧广武城 → 神头海 → 利民堡 → 平鲁北固山 → 朔州老城夜景 → 崇福寺广场 → 马邑文化街'}
     };
     const qs = s => document.querySelector(s);
-    const chips = qs('#chips'); chips.innerHTML = places.map(p=>`<span class="chip">${p.city}</span>`).join('');
+    const chips = qs('#chips'); chips.innerHTML = places.map(p=>`<span class="chip" data-city="${p.city}" role="button" tabindex="0">${p.city}</span>`).join('');
     let current = places[0]; let routePage = 1; let routePageSize = 6;
     const pick = list => list[Math.floor(Math.random()*list.length)];
     const normalizeRoute = route => Array.isArray(route) ? {name:route[0],spots:route[1],days:route.slice(2),source:'站内组合',sourceUrl:null} : route;
@@ -395,7 +432,7 @@
     function render(place) {
       current = place; const days = qs('#days').value; const duration=nightsLabel(days); const maxDays=Math.max(2,Math.min(5,Number(days)||2)); const fixedMode=qs('#transport').value; const displayMode=fixedMode==='大巴'?'公共交通':fixedMode;
       const profile=cityProfile(place); qs('#headlineCity').textContent=place.city; qs('#resultIntro').textContent=place.intro; qs('#cityCode').textContent=place.code; qs('#place').textContent=place.city; qs('#description').textContent=place.desc; qs('#distance').textContent=place.km+' km'; qs('#duration').textContent=duration; qs('#mode').textContent=displayMode; qs('#booking').textContent=place.booking; qs('#keyword').textContent=place.key; qs('#tags').innerHTML=place.tags.map(t=>`<span>${t}</span>`).join(''); qs('#cityType').textContent=profile.type; qs('#bestSeason').textContent=profile.season; qs('#cityPace').textContent=profile.pace;
-      const spots=allSpotNames(place).slice(0,9); qs('#spotCount').textContent=`${spots.length} 个可选景点 · 含游玩建议`; qs('#spots').innerHTML=spots.map((spot,i)=>{ const guide=spotGuide(spot); return `<article class="spot"><span class="spot-kicker">STOP ${String(i+1).padStart(2,'0')}</span><strong>${spot}</strong><small>${spotType(spot)} · ${guide.stay}</small><p class="spot-note">${guide.note}</p></article>`}).join('');
+      const spots=allSpotNames(place); qs('#spotCount').textContent=`${spots.length} 个可选景点 · 含游玩建议`; qs('#spots').innerHTML=spots.map((spot,i)=>{ const guide=spotGuide(spot); return `<article class="spot"><span class="spot-kicker">STOP ${String(i+1).padStart(2,'0')}</span><strong>${spot}</strong><small>${spotType(spot)} · ${guide.stay}</small><p class="spot-note">${guide.note}</p></article>`}).join('');
       const pool=buildRoutePool(place); const totalPages=Math.max(1,Math.ceil(pool.length/routePageSize)); routePage=Math.min(Math.max(routePage,1),totalPages); const start=(routePage-1)*routePageSize; const usable=pool.slice(start,start+routePageSize); const end=start+usable.length; qs('#routeLabel').textContent=`${place.city} · 第 ${start+1}–${end} 条 / 共 ${pool.length} 条`;
       qs('#routes').innerHTML=usable.map((r,i)=>{ const days=buildItinerary(r,place,maxDays); const source=r.sourceUrl?`<a class="route-source" href="${r.sourceUrl}" target="_blank" rel="noopener">${r.source} ↗</a>`:`<span class="route-source">${r.source}</span>`; return `<article class="route-card"><div class="route-top"><div class="route-meta"><span class="route-no">ROUTE ${String(start+i+1).padStart(2,'0')}</span>${source}</div><span class="route-days">${duration}</span></div><h3>${r.name}</h3><div class="route-spots"><span>沿线景点</span><p>${r.spots}</p></div><div class="itinerary">${days.map((line,index)=>{let [d,...rest]=completeDay(line,index,days.length,place.city).split(' · '); return `<div class="day"><em>${d}</em><span>${rest.join(' · ')}</span></div>`}).join('')}</div><div class="route-advice"><span>出行：${displayMode} 从北京出发</span><span>住宿：${place.city}市区或景区周边</span></div><div class="route-foot"><span>适合 ${i%3===0?'第一次到访':i%3===1?'想多走一点':'慢慢体验'}</span><span>${displayMode} · ${place.km} km</span></div></article>`}).join('');
       const pages=Array.from({length:totalPages},(_,i)=>i+1); qs('#pageButtons').innerHTML=pages.map(page=>`<button class="page-btn${page===routePage?' active':''}" type="button" data-page="${page}"${page===routePage?' aria-current="page"':''}>${page}</button>`).join('');
@@ -404,6 +441,27 @@
     function drawCity() { routePage=1; render(pick(matchingPlaces())); }
     qs('#draw').addEventListener('click',drawCity); qs('#pageSize').addEventListener('change',event=>{ routePageSize=Number(event.target.value); routePage=1; render(current); }); qs('#pageButtons').addEventListener('click',event=>{ const button=event.target.closest('[data-page]'); if(!button)return; routePage=Number(button.dataset.page); render(current); qs('#routeSection').scrollIntoView({behavior:'smooth',block:'start'}); });
     qs('#days').addEventListener('change',()=>render(current)); qs('#transport').addEventListener('change',drawCity); qs('#maxDistance').addEventListener('input',syncDistanceControl); qs('#maxDistance').addEventListener('change',drawCity); qs('#maxDistance').addEventListener('wheel',event=>{ event.preventDefault(); const range=event.currentTarget; event.deltaY>0?range.stepDown():range.stepUp(); range.dispatchEvent(new Event('input')); range.dispatchEvent(new Event('change')); },{passive:false}); syncDistanceControl(); render(current);
+    const cityModal = qs('#cityModal');
+    const modalCityGrid = qs('#modalCityGrid');
+    const citySearch = qs('#citySearch');
+    function buildModalCities(filter='') {
+      const f = filter.trim().toLowerCase();
+      const list = places.filter(p => !f || p.city.toLowerCase().includes(f) || p.tags.some(t=>t.toLowerCase().includes(f)));
+      modalCityGrid.innerHTML = list.map(p => `<button class="modal-city${current.city===p.city?' active':''}" data-city="${p.city}" type="button"><div class="modal-city-head"><span class="modal-city-name">${p.city}</span><span class="modal-city-km">${p.km} km</span></div><div class="modal-city-tags">${p.tags.map(t=>`<span>${t}</span>`).join('')}</div></button>`).join('') || '<div class="modal-empty">没有找到匹配的城市</div>';
+    }
+    function openModal() { buildModalCities(); citySearch.value=''; cityModal.hidden=false; document.body.style.overflow='hidden'; setTimeout(()=>citySearch.focus(),60); }
+    function closeModal() { cityModal.hidden=true; document.body.style.overflow=''; }
+    function selectCityByName(name) {
+      const p = places.find(x=>x.city===name); if(!p) return;
+      closeModal(); routePage=1; render(p); window.scrollTo({top:0,behavior:'smooth'});
+    }
+    qs('#selectCity').addEventListener('click',openModal);
+    qs('#modalClose').addEventListener('click',closeModal);
+    qs('#modalBackdrop').addEventListener('click',closeModal);
+    citySearch.addEventListener('input',e=>buildModalCities(e.target.value));
+    modalCityGrid.addEventListener('click',e=>{ const b=e.target.closest('[data-city]'); if(b) selectCityByName(b.dataset.city); });
+    chips.addEventListener('click',e=>{ const c=e.target.closest('[data-city]'); if(c) selectCityByName(c.dataset.city); });
+    document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&!cityModal.hidden) closeModal(); });
   </script>
 </body>
 </html>
