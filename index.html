@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="从北京出发，随机抽选 500 公里内的旅行目的地与路线。" />
+  <title>周末出发 · 北京周边旅行抽签</title>
+  <link rel="preconnect" href="https://r1.visitbeijing.com.cn" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23f6a623'/%3E%3Cpath d='M13 45 29 18l8 14 6-8 9 21H13Z' fill='%230b1d35'/%3E%3Ccircle cx='46' cy='15' r='5' fill='white'/%3E%3C/svg%3E" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap');
+    :root { --ink:#10213a; --night:#071626; --navy:#0c2844; --paper:#f8f5ee; --orange:#ff9d23; --yellow:#ffd66b; --mint:#bfe6d2; --muted:#6e7a88; --line:#dfe5e8; --red:#df5e45; }
+    * { box-sizing:border-box; }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    body { margin:0; color:var(--ink); background:var(--paper); font-family:'Noto Sans SC',system-ui,sans-serif; font-size:16px; }
+    button,input,select { font:inherit; }
+    button { cursor:pointer; }
+    .hero { min-height:465px; color:#fff; position:relative; overflow:hidden; background:linear-gradient(100deg,rgba(3,16,31,.95) 0%,rgba(4,22,42,.85) 45%,rgba(4,22,42,.24) 100%), url('https://r1.visitbeijing.com.cn/vbj-s/2019/1129/20191129115850296.jpg') center/cover; }
+    .hero::after { content:''; position:absolute; inset:auto -5% -105px; height:240px; border-radius:50% 50% 0 0; background:var(--paper); }
+    nav, .hero-copy, .control-shell, main, footer { width:min(1160px, calc(100% - 40px)); margin-inline:auto; }
+    nav { position:relative; z-index:2; height:84px; display:flex; justify-content:space-between; align-items:center; }
+    .brand { font-weight:900; font-size:1.15rem; letter-spacing:.04em; display:flex; gap:10px; align-items:center; }
+    .brand-mark { width:31px; height:31px; border-radius:10px; display:grid; place-items:center; background:var(--orange); color:var(--night); font-size:1rem; }
+    .hero-link { font-size:.9rem; color:#d9e5ec; border-bottom:1px solid #99aab4; padding-bottom:3px; }
+    .hero-copy { position:relative; z-index:1; padding:32px 0 145px; }
+    .eyebrow { display:flex; align-items:center; gap:8px; font-family:'DM Mono',monospace; font-size:.78rem; letter-spacing:.12em; color:var(--yellow); }
+    .eyebrow::before { content:''; width:25px; height:1px; background:currentColor; }
+    h1 { font-size:clamp(2.25rem,5vw,4.45rem); line-height:1.12; letter-spacing:-.055em; max-width:820px; margin:16px 0 12px; }
+    .hero-copy p { color:#d5e0e6; max-width:550px; margin:0; line-height:1.75; }
+    .control-shell { position:relative; z-index:5; margin-top:-90px; }
+    .control-panel { background:#fff; border-radius:22px; box-shadow:0 18px 52px rgba(8,30,50,.16); padding:22px; display:grid; grid-template-columns:.9fr 1.2fr .9fr auto; gap:14px; align-items:end; }
+    .field { display:grid; gap:7px; }
+    .field label { font-size:.83rem; font-weight:700; color:#526171; }
+    .input-wrap { height:53px; border:1px solid var(--line); border-radius:12px; display:flex; align-items:center; padding:0 13px; background:#fcfcfb; }
+    .input-wrap:focus-within { border-color:#4786b2; box-shadow:0 0 0 3px #dcebf5; }
+    .input-wrap span { color:#738396; margin-right:8px; }
+    input,select { width:100%; border:0; outline:0; color:var(--ink); background:transparent; }
+    .range-label { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+    .range-label b { color:#ba7117; font-family:'DM Mono',monospace; font-size:.78rem; font-weight:500; }
+    .range-shell { height:53px; border:1px solid var(--line); border-radius:12px; display:grid; grid-template-columns:30px 1fr 30px; align-items:center; gap:8px; padding:0 10px; background:#fcfcfb; }
+    .range-shell:focus-within { border-color:#4786b2; box-shadow:0 0 0 3px #dcebf5; }
+    .range-shell > span { color:#7c8991; font-family:'DM Mono',monospace; font-size:.67rem; text-align:center; }
+    input[type="range"] { --range-progress:100%; appearance:none; -webkit-appearance:none; height:6px; padding:0; border-radius:99px; background:linear-gradient(90deg,var(--orange) 0%,var(--orange) var(--range-progress),#dce5e7 var(--range-progress),#dce5e7 100%); cursor:ew-resize; }
+    input[type="range"]::-webkit-slider-thumb { appearance:none; -webkit-appearance:none; width:19px; height:19px; border:3px solid #fff; border-radius:50%; background:var(--navy); box-shadow:0 2px 7px rgba(5,30,49,.26); }
+    input[type="range"]::-moz-range-thumb { width:15px; height:15px; border:3px solid #fff; border-radius:50%; background:var(--navy); box-shadow:0 2px 7px rgba(5,30,49,.26); }
+    .draw-btn { border:0; height:53px; padding:0 23px; border-radius:12px; background:var(--orange); color:#0c253e; font-weight:900; box-shadow:inset 0 -2px 0 rgba(114,62,0,.2); white-space:nowrap; transition:.18s transform,.18s background; }
+    .draw-btn:hover { transform:translateY(-2px); background:#ffb046; }
+    .draw-btn:active { transform:translateY(0); }
+    main { padding:49px 0 28px; }
+    .result-bar { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:22px; gap:20px; }
+    h2 { font-size:clamp(1.45rem,2.6vw,2.2rem); margin:0; letter-spacing:-.04em; }
+    .subtext { margin:7px 0 0; color:var(--muted); font-size:.94rem; }
+    .random-note { color:#4d667a; background:#e8f2f5; padding:8px 12px; border-radius:99px; font-size:.82rem; white-space:nowrap; }
+    .winner { min-height:275px; border-radius:24px; overflow:hidden; color:#fff; position:relative; display:grid; grid-template-columns:1.12fr .88fr; background:var(--navy); box-shadow:0 14px 38px rgba(11,38,67,.16); }
+    .winner::before { content:''; position:absolute; width:330px; height:330px; border:1px solid rgba(255,255,255,.13); border-radius:50%; right:14%; top:-145px; box-shadow:0 0 0 45px rgba(255,255,255,.035), 0 0 0 90px rgba(255,255,255,.025); }
+    .winner-info { position:relative; z-index:1; padding:32px 35px; }
+    .ticket { display:inline-flex; gap:7px; align-items:center; padding:6px 10px; border:1px solid rgba(255,255,255,.25); color:#d5e6ed; border-radius:99px; font-family:'DM Mono',monospace; font-size:.72rem; letter-spacing:.06em; }
+    .ticket b { color:var(--yellow); }
+    .place { margin:16px 0 5px; font-size:clamp(2rem,4vw,3.35rem); line-height:1; letter-spacing:-.06em; }
+    .winner-info p { color:#c8d6df; max-width:480px; line-height:1.65; margin:0 0 18px; }
+    .tags { display:flex; gap:8px; flex-wrap:wrap; }
+    .tags span { padding:6px 10px; background:rgba(255,255,255,.1); border-radius:7px; font-size:.78rem; }
+    .winner-stats { position:relative; z-index:1; padding:30px 33px; background:rgba(1,18,34,.24); display:grid; align-content:center; gap:22px; }
+    .stat { border-left:1px solid rgba(255,255,255,.3); padding-left:13px; }
+    .stat strong { display:block; font-family:'DM Mono',monospace; color:var(--yellow); font-size:1.4rem; font-weight:500; }
+    .stat span { color:#c2d1da; font-size:.82rem; }
+    .tips { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px; }
+    .tip { padding:14px 15px; background:#fff; border:1px solid var(--line); border-radius:14px; display:flex; gap:10px; align-items:flex-start; }
+    .tip-icon { font-size:1.15rem; }
+    .tip b { display:block; font-size:.9rem; margin-bottom:2px; }
+    .tip p { margin:0; font-size:.78rem; color:var(--muted); line-height:1.55; }
+    .city-dossier { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:12px; }
+    .city-cell { background:#f0f5f3; border:1px solid #dce7e2; border-radius:14px; padding:14px 15px; }
+    .city-cell span { display:block; color:#6a7e78; font-size:.7rem; letter-spacing:.08em; margin-bottom:5px; }
+    .city-cell b { display:block; color:#23483e; font-size:.93rem; }
+    .spot-section { margin-top:42px; }
+    .spot-title { display:flex; align-items:end; justify-content:space-between; gap:20px; margin-bottom:16px; }
+    .spot-title h2 { font-size:1.55rem; }
+    .spot-title p { margin:0; color:var(--muted); font-size:.87rem; }
+    .spot-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+    .spot { background:#fff; border:1px solid var(--line); border-radius:14px; min-height:142px; padding:16px; position:relative; overflow:hidden; }
+    .spot::after { content:'✦'; position:absolute; right:12px; bottom:7px; color:#eaf0f2; font-size:2.1rem; }
+    .spot-kicker { display:block; color:#c77a22; font-family:'DM Mono',monospace; font-size:.67rem; letter-spacing:.09em; margin-bottom:7px; }
+    .spot strong { display:block; position:relative; z-index:1; font-size:1rem; letter-spacing:-.02em; }
+    .spot small { display:block; position:relative; z-index:1; margin-top:5px; color:#74818c; font-size:.75rem; }
+    .spot-note { position:relative; z-index:1; margin:8px 0 0; color:#526879; font-size:.74rem; line-height:1.55; }
+    .section-head { display:flex; justify-content:space-between; align-items:center; gap:20px; margin:51px 0 17px; }
+    .section-head p { margin:0; color:var(--muted); font-size:.9rem; }
+    .route-actions { display:flex; align-items:center; gap:11px; }
+    .route-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .route-card { background:#fff; border:1px solid var(--line); border-radius:18px; padding:21px; transition:.2s transform,.2s box-shadow; }
+    .route-card:hover { transform:translateY(-4px); box-shadow:0 13px 27px rgba(20,46,66,.09); }
+    .route-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:15px; }
+    .route-meta { display:flex; align-items:center; gap:7px; flex-wrap:wrap; }
+    .route-no { font-family:'DM Mono',monospace; font-size:.78rem; letter-spacing:.1em; color:#6c7a89; }
+    .route-source { display:inline-flex; align-items:center; min-height:23px; padding:3px 7px; border:1px solid #cbded7; border-radius:99px; background:#f3faf7; color:#34715e; font-size:.66rem; font-weight:800; text-decoration:none; }
+    a.route-source:hover { border-color:#76a995; background:#e4f3ed; }
+    .route-days { background:#fff0ce; color:#925d05; padding:4px 8px; border-radius:5px; font-size:.72rem; font-weight:700; }
+    .route-card h3 { font-size:1.18rem; margin:0 0 9px; letter-spacing:-.03em; }
+    .route-spots { margin:0 0 17px; min-height:64px; padding:10px 11px; border-radius:10px; background:#f4f8f9; }
+    .route-spots span { display:block; color:#758793; font-size:.68rem; font-weight:700; letter-spacing:.08em; margin-bottom:4px; }
+    .route-spots p { margin:0; color:#34566a; font-size:.84rem; font-weight:600; line-height:1.6; }
+    .itinerary { border-top:1px dashed #d7dfe4; padding-top:14px; display:grid; gap:8px; }
+    .day { display:grid; grid-template-columns:35px 1fr; gap:8px; font-size:.81rem; line-height:1.45; }
+    .day em { color:#bd6815; font-style:normal; font-family:'DM Mono',monospace; font-size:.72rem; padding-top:2px; }
+    .route-advice { display:flex; flex-wrap:wrap; gap:7px; margin-top:13px; }
+    .route-advice span { color:#526f82; background:#edf4f6; border-radius:6px; padding:5px 7px; font-size:.7rem; }
+    .route-foot { margin-top:16px; border-top:1px solid #edf0f2; padding-top:12px; color:#536d81; font-size:.78rem; display:flex; justify-content:space-between; }
+    .route-pagination { display:flex; align-items:center; justify-content:center; gap:9px; margin:28px 0 4px; flex-wrap:wrap; }
+    .page-size { position:relative; margin-right:4px; }
+    .page-size select { min-width:112px; height:43px; appearance:none; border:1px solid #d5dde0; border-radius:10px; background:#fff; color:#1f2d35; padding:0 36px 0 13px; font:700 .82rem/1 'DM Mono',monospace; cursor:pointer; }
+    .page-size::after { content:'⌄'; position:absolute; right:13px; top:50%; transform:translateY(-56%); color:#718089; pointer-events:none; }
+    .page-buttons { display:flex; align-items:center; gap:7px; flex-wrap:wrap; }
+    .page-btn { min-width:43px; height:43px; padding:0 12px; border:1px solid #d5dde0; border-radius:9px; background:#fff; color:#1b2b33; font-size:.86rem; font-weight:750; transition:.16s background,.16s color,.16s border-color,.16s transform; }
+    .page-btn:hover { border-color:#94b4a8; transform:translateY(-1px); }
+    .page-btn.active { background:#17211f; border-color:#17211f; color:#fff; }
+    .page-ellipsis { min-width:34px; text-align:center; color:#718089; font-weight:800; }
+    .explore { margin-top:50px; padding:25px 28px; background:#e4eee9; border-radius:20px; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .explore h3 { font-size:1.17rem; margin:0 0 5px; }
+    .explore p { margin:0; color:#536a65; font-size:.86rem; }
+    .chips { display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end; }
+    .chip { border:1px solid #bad1c8; background:#f7fbf8; color:#31584d; padding:7px 11px; border-radius:99px; font-size:.78rem; }
+    footer { border-top:1px solid #dce2df; padding:22px 0 39px; color:#7e898e; display:flex; justify-content:space-between; font-size:.75rem; }
+    .fade { animation:fade .48s ease both; } @keyframes fade { from { opacity:.2; transform:translateY(8px) } to { opacity:1; transform:translateY(0) } }
+    @media (max-width:780px) { nav,.hero-copy,.control-shell,main,footer { width:min(100% - 28px, 600px); } .hero { min-height:520px; } .hero-copy { padding-top:22px; } .control-shell { margin-top:-125px; } .control-panel { grid-template-columns:1fr 1fr; padding:15px; } .draw-btn { grid-column:span 2; } .winner { grid-template-columns:1fr; } .winner-stats { grid-template-columns:repeat(3,1fr); gap:12px; padding:20px 25px; } .tips,.city-dossier,.spot-grid,.route-grid { grid-template-columns:1fr; } .result-bar { align-items:flex-start; flex-direction:column; } .section-head { align-items:flex-start; flex-direction:column; } .explore { align-items:flex-start; flex-direction:column; } .chips { justify-content:flex-start; } footer { gap:12px; flex-direction:column; } }
+    @media (max-width:450px) { .control-panel { grid-template-columns:1fr; } .draw-btn { grid-column:auto; } .winner-info { padding:27px 24px; } .winner-stats { grid-template-columns:1fr 1fr; } .place { font-size:2.5rem; } .route-pagination { justify-content:flex-start; } .page-size { width:100%; } .page-size select { width:100%; } }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <nav><div class="brand"><span class="brand-mark">⟡</span>周末出发</div><span class="hero-link">北京 · 半径 500 公里</span></nav>
+    <div class="hero-copy">
+      <div class="eyebrow">RANDOM GETAWAY / 01</div>
+      <h1>今天，去一个<br>没计划过的地方。</h1>
+      <p>从古城、山野、海岸到草原，抽一座城市，收一份能照着走的旅行方案。</p>
+    </div>
+  </header>
+  <div class="control-shell">
+    <section class="control-panel" aria-label="旅行抽选设置">
+      <div class="field"><label for="days">旅行天数</label><div class="input-wrap"><span>◷</span><input id="days" type="number" min="2" max="5" value="2" /></div></div>
+      <div class="field"><label class="range-label" for="maxDistance">距北京范围 <b id="distanceLimit">≤ 500 km</b></label><div class="range-shell"><span>135</span><input id="maxDistance" type="range" min="135" max="500" step="5" value="500" aria-label="距北京最大距离" /><span>500</span></div></div>
+      <div class="field"><label for="transport">固定出行方式</label><div class="input-wrap"><span>⌁</span><select id="transport"><option value="高铁">高铁</option><option value="自驾">自驾</option><option value="大巴">公共交通</option></select></div></div>
+      <button class="draw-btn" id="draw" type="button">抽一趟旅行</button>
+    </section>
+  </div>
+  <main>
+    <div class="result-bar"><div><h2>这次，去 <span id="headlineCity">承德</span></h2><p class="subtext" id="resultIntro">慢一点逛完一座山庄，再把长城的日落留给自己。</p></div><span class="random-note">每次抽选都会换一个目的地</span></div>
+    <section class="winner" id="winner" aria-live="polite">
+      <div class="winner-info"><span class="ticket">抽中目的地 · <b id="cityCode">CHENGDE</b></span><h3 class="place" id="place">承德</h3><p id="description">皇家园林、寺庙群与燕山相接。适合用一个周末，在湖面、宫墙与山风之间慢慢走。</p><div class="tags" id="tags"></div></div>
+      <div class="winner-stats"><div class="stat"><strong id="distance">230 km</strong><span>距北京参考距离</span></div><div class="stat"><strong id="duration">2天1夜</strong><span>建议旅行长度</span></div><div class="stat"><strong id="mode">高铁</strong><span>固定出行方式</span></div></div>
+    </section>
+    <section class="tips"><article class="tip"><div class="tip-icon">◎</div><div><b>出发前先确认</b><p id="booking">热门景区建议提前预约；早班出发能避开人流。</p></div></article><article class="tip"><div class="tip-icon">✦</div><div><b>这次的旅行关键词</b><p id="keyword">园林、长城、地方小吃、温柔山景。</p></div></article></section>
+    <section class="city-dossier"><article class="city-cell"><span>旅行城市类型</span><b id="cityType">皇家园林 · 长城 · 避暑</b></article><article class="city-cell"><span>适合出发季节</span><b id="bestSeason">春末至初秋</b></article><article class="city-cell"><span>建议旅行节奏</span><b id="cityPace">2–3 天轻松出发</b></article></section>
+    <section class="spot-section"><div class="spot-title"><div><h2>具体景点</h2><p>抽中后，从这里挑出最想去的几站。</p></div><p id="spotCount">6 个可选景点 · 含游玩建议</p></div><div class="spot-grid" id="spots"></div></section>
+    <section id="routeSection"><div class="section-head"><div><h2>可直接出发的路线</h2><p>每个城市至少 10 条；参考马蜂窝与穷游公开攻略重新组合，可按页浏览。</p></div><div class="route-actions"><p id="routeLabel">承德 · 共 16 条路线</p></div></div><div class="route-grid" id="routes"></div><nav class="route-pagination" aria-label="路线分页"><label class="page-size"><span class="sr-only">每页显示数量</span><select id="pageSize" aria-label="每页显示路线数量"><option value="3">3/页</option><option value="6" selected>6/页</option><option value="10">10/页</option></select></label><div class="page-buttons" id="pageButtons"></div></nav></section>
+    <section class="explore"><div><h3>目的地池 · 16 座城市 / 地区</h3><p>覆盖北京周边约 500 公里内的历史、人文、山野与海岸旅行地。</p></div><div class="chips" id="chips"></div></section>
+  </main>
+  <footer><span>周末出发 · 目的地与行程为灵感参考</span><span>景区开放、预约与交通班次请以出行当日官方信息为准</span></footer>
+  <script>
+    const places = [
+      {city:'承德', code:'CHENGDE', km:230, mode:'高铁', modes:['高铁','自驾'], tags:['皇家园林','长城','避暑'], desc:'皇家园林、寺庙群与燕山相接。适合用一个周末，在湖面、宫墙与山风之间慢慢走。', intro:'慢一点逛完一座山庄，再把长城的日落留给自己。', booking:'避暑山庄与外八庙建议分日安排；旺季提前预约。', key:'园林、长城、地方小吃、温柔山景。', routes:[['皇家园林慢游','避暑山庄 → 热河文庙 → 武烈河夜景','DAY 1 · 避暑山庄宫区与湖区，傍晚走武烈河。','DAY 2 · 普宁寺或小布达拉宫，午后返京。'],['金山岭日落线','金山岭长城 → 古北水镇 → 返京','DAY 1 · 午后登城，预留日落与下山时间。','DAY 2 · 逛古北水镇，傍晚返程。'],['山庄 + 寺庙深度线','避暑山庄 → 普陀宗乘之庙 → 承德老城','DAY 1 · 山庄全日，安排湖区游船或步行。','DAY 2 · 外八庙择二，尝一顿承德莜面。'] ]},
+      {city:'天津', code:'TIANJIN', km:135, mode:'高铁', modes:['高铁','自驾','大巴'], tags:['城市漫步','博物馆','夜景'], desc:'把海河的晚风、老建筑与市井早点装进一个周末，适合第一次说走就走的短途逃离。', intro:'坐上一小时左右的高铁，去吃早饭、看海河、逛老城。', booking:'海河游船与热门展馆常需预约；周末高铁建议提早购票。', key:'早市、建筑漫游、海河夜景、相声。', routes:[['海河城市漫游','五大道 → 瓷房子 → 海河夜景','DAY 1 · 午前五大道散步，下午意式风情区。','DAY 2 · 古文化街与鼓楼，晚餐后返京。'],['蓟州山野线','盘山 → 渔阳古街 → 黄崖关','DAY 1 · 早出发上盘山，傍晚逛渔阳古街。','DAY 2 · 黄崖关长城徒步，午后返京。'],['滨海亲子线','国家海洋博物馆 → 东疆亲海公园','DAY 1 · 海博馆预留半天，傍晚住滨海。','DAY 2 · 海边散步、看日出，下午回程。'] ]},
+      {city:'秦皇岛', code:'QINHUANGDAO', km:300, mode:'高铁', modes:['高铁','自驾'], tags:['海岸','长城','海鲜'], desc:'长城在这里入海，海风把节奏放慢。适合想看海、也不想放弃历史感的一次短逃离。', intro:'白天追海岸线，傍晚去老龙头看长城与海相遇。', booking:'海边温差与风大，带一件防风外套；日出时段预留交通时间。', key:'看海、日出、长城、海鲜排档。', routes:[['山海关看海线','老龙头 → 山海关古城 → 海边夜市','DAY 1 · 老龙头看长城入海，夜逛古城。','DAY 2 · 角山长城或乐岛，午后返程。'],['北戴河松弛线','鸽子窝 → 碧螺塔 → 刘庄夜市','DAY 1 · 清晨鸽子窝，午后海边咖啡。','DAY 2 · 联峰山轻徒步，吃完海鲜回京。'],['沿海自驾线','阿那亚周边 → 黄金海岸 → 昌黎','DAY 1 · 沿海公路与沙滩日落。','DAY 2 · 昌黎葡萄小镇，避开晚高峰返程。'] ]},
+      {city:'张家口', code:'ZHANGJIAKOU', km:200, mode:'高铁', modes:['高铁','自驾'], tags:['草原','滑雪','山野'], desc:'一小时级高铁连接的北方山野：冬天去雪场，暖季去草甸与长城脚下吃一锅莜面。', intro:'离北京很近，却有截然不同的高原空气与开阔感。', booking:'草原昼夜温差大；滑雪季需提前锁定住宿与雪票。', key:'山野、高铁、莜面、四季户外。', routes:[['崇礼轻运动','太舞/万龙 → 崇礼小镇','DAY 1 · 按季节滑雪或山地徒步，住雪场周边。','DAY 2 · 小镇早午餐，乘高铁返京。'],['大境门古道','大境门 → 张北草原天路','DAY 1 · 城区大境门与堡子里老街。','DAY 2 · 自驾草原天路一段，傍晚返程。'],['赤城温泉线','赤城温泉 → 海坨山谷周边','DAY 1 · 午后泡汤放松，慢住一晚。','DAY 2 · 山谷步道与咖啡，轻松返京。'] ]},
+      {city:'保定', code:'BAODING', km:150, mode:'高铁', modes:['高铁','自驾','大巴'], tags:['古城','山岳','人文'], desc:'古莲花池、直隶总督署与太行山脚的风景在这里并存，适合边走边吃的文化周末。', intro:'把城市历史与太行山的一段山路组合起来。', booking:'白石山缆车及天气变化较大，登山前查看当日开放信息。', key:'古城、太行、驴肉火烧、博物馆。', routes:[['保定城史线','直隶总督署 → 古莲花池 → 西大街','DAY 1 · 总督署与古莲花池，晚上逛西大街。','DAY 2 · 保定博物馆，吃完早午餐返京。'],['白石山云端线','白石山 → 玻璃栈道 → 涞源','DAY 1 · 早抵白石山，轻装登山住涞源。','DAY 2 · 温泉或小镇早餐，午后回京。'],['易水湖慢游','易水湖 → 太行水镇 → 清西陵','DAY 1 · 湖边轻徒步与夕阳。','DAY 2 · 清西陵与水镇，避开傍晚车流。'] ]},
+      {city:'唐山', code:'TANGSHAN', km:180, mode:'高铁', modes:['高铁','自驾'], tags:['工业记忆','海岛','温泉'], desc:'从工业遗产到海岛渔村，唐山适合不赶景点、愿意为一顿海鲜绕路的人。', intro:'可城可海的一次选择，适合两天的节奏。', booking:'海岛航班与潮汐受天气影响，海边行程留出弹性。', key:'工业遗产、海鲜、温泉、海岸。', routes:[['城市记忆线','唐山博物馆 → 开滦矿业遗址 → 南湖','DAY 1 · 博物馆与矿业遗址，傍晚南湖。','DAY 2 · 陶瓷文化或皮影主题，午后返京。'],['乐亭海风线','浅水湾 → 菩提岛周边 → 海鲜市场','DAY 1 · 自驾到乐亭，看海吃海鲜。','DAY 2 · 海岸散步，午后回京。'],['遵化温泉线','清东陵 → 汤泉 → 山里小住','DAY 1 · 清东陵半日，傍晚泡汤。','DAY 2 · 山间早餐，慢慢返京。'] ]},
+      {city:'大同', code:'DATONG', km:350, mode:'高铁', modes:['高铁','自驾'], tags:['石窟','古建','面食'], desc:'石窟、古城墙与一碗刀削面，让这里成为最值得用三天慢慢走的北方古都。', intro:'把一天留给云冈，把一晚留给古城灯火。', booking:'云冈石窟展区步行距离长；建议选择高铁到站后打车串联。', key:'石窟、古建、夜城、刀削面。', routes:[['云冈古城经典线','云冈石窟 → 华严寺 → 古城墙','DAY 1 · 云冈石窟完整游览，晚上逛古城。','DAY 2 · 华严寺、善化寺与城墙日落。'],['悬空寺延伸线','悬空寺 → 恒山 → 浑源','DAY 1 · 早出发至浑源，登临悬空寺。','DAY 2 · 体力充足可登恒山，傍晚回大同。'],['古建寻访线','应县木塔 → 浑源凉粉 → 大同古城','DAY 1 · 自驾应县木塔，午后回大同。','DAY 2 · 古城慢逛、面食收尾返京。'] ]},
+      {city:'平遥', code:'PINGYAO', km:490, mode:'高铁', modes:['高铁'], tags:['古城','晋商','慢生活'], desc:'推开一扇票号大门，就进入晋商往事。适合把手机收起来、住进古城一晚。', intro:'在砖墙、镖局和票号之间，过一个步行就够的周末。', booking:'古城通票与演出项目分开确认；节假日古城内住宿较紧张。', key:'古城夜色、票号、面食、手作。', routes:[['古城深游线','日昇昌 → 城墙 → 又见平遥','DAY 1 · 票号与县衙，夜看演出或逛明清街。','DAY 2 · 城墙晨走、文庙与咖啡小院。'],['双寺延伸线','镇国寺 → 双林寺 → 平遥古城','DAY 1 · 先看镇国寺彩塑，晚上入住古城。','DAY 2 · 双林寺与古城细逛，乘高铁返京。'],['晋商故事线','协同庆 → 镖局 → 古城小院','DAY 1 · 用讲解理解票号与镖局脉络。','DAY 2 · 选一家小院慢吃早餐，午后回程。'] ]},
+      {city:'五台山', code:'WUTAISHAN', km:360, mode:'自驾', modes:['自驾','大巴'], tags:['佛国','山野','清修'], desc:'高台之上的寺庙与山风，适合不追赶景点、想把节奏放到很慢的人。', intro:'清晨的钟声和傍晚的山色，会让两天显得很长。', booking:'山中气温低于北京；寺庙礼仪与交通换乘请提前确认。', key:'寺庙、山风、素食、慢行。', routes:[['核心寺庙线','显通寺 → 塔院寺 → 菩萨顶','DAY 1 · 台怀镇核心寺院步行串联。','DAY 2 · 清晨礼佛、梵仙山周边轻走，返程。'],['山野轻徒步','黛螺顶 → 台怀镇 → 山中素斋','DAY 1 · 黛螺顶量力而行，傍晚住台怀。','DAY 2 · 寺院慢游与素斋，午后回京。'],['三日沉浸线','台怀镇 → 南山寺 → 佛光寺周边','DAY 1 · 核心寺庙与夜宿台怀。','DAY 2 · 南山寺、广化寺，留白休息。','DAY 3 · 周边古建或直接返京。'] ]},
+      {city:'沧州', code:'CANGZHOU', km:250, mode:'高铁', modes:['高铁','自驾'], tags:['武术','运河','湿地'], desc:'大运河从城市穿过，铁狮子与杂技、武术故事让这座城有一种朴素的劲儿。', intro:'不需要赶路，沿着运河和老城吃一顿就很满足。', booking:'候鸟季到湿地请遵守保护区规定；博物馆闭馆日提前查看。', key:'运河、铁狮子、羊肠子、湿地。', routes:[['运河文化线','南川老街 → 大运河 → 沧州博物馆','DAY 1 · 老街与运河夜游，吃本地小吃。','DAY 2 · 博物馆与清风楼，午后返京。'],['吴桥杂技线','吴桥杂技大世界 → 小镇夜市','DAY 1 · 高铁/自驾到吴桥，看白天演出。','DAY 2 · 体验项目后返程。'],['湿地看鸟线','南大港湿地 → 沧州城区','DAY 1 · 早入湿地观察候鸟，住市区。','DAY 2 · 城市文化线，午后返京。'] ]},
+      {city:'安阳', code:'ANYANG', km:480, mode:'高铁', modes:['高铁','自驾'], tags:['甲骨文','古都','太行'], desc:'殷墟把中国文字的源头拉到眼前，城市之外还有太行峡谷的壮阔。', intro:'一座适合带着好奇心去看的古都，历史不是展板，而是脚下的土。', booking:'殷墟需预留至少半天；自驾太行路线注意山路与天气。', key:'甲骨文、青铜、古都、太行。', routes:[['殷墟古都线','殷墟博物馆 → 妇好墓 → 文字博物馆','DAY 1 · 殷墟核心区与博物馆，晚逛老城。','DAY 2 · 文字博物馆，午后高铁返京。'],['太行峡谷线','太行大峡谷 → 桃花谷','DAY 1 · 自驾入峡谷，安排轻徒步。','DAY 2 · 桃花谷清晨，避开午后车流返京。'],['古城美食线','仓巷街 → 文峰塔 → 安阳老城','DAY 1 · 古城散步与小吃。','DAY 2 · 殷墟半日，返程。'] ]},
+      {city:'济南', code:'JINAN', km:430, mode:'高铁', modes:['高铁','自驾'], tags:['泉水','老城','鲁菜'], desc:'泉水从城里流出来，曲水亭街和大明湖适合把速度降到散步的等级。', intro:'三小时左右高铁，一座有泉水和烟火气的北方城市。', booking:'泉水景区宜清晨或傍晚走；趵突泉旺季客流较大。', key:'泉水、老街、把子肉、鲁菜。', routes:[['泉城经典线','趵突泉 → 五龙潭 → 大明湖','DAY 1 · 趵突泉与五龙潭，傍晚大明湖。','DAY 2 · 曲水亭街、宽厚里，午后返京。'],['老城慢游线','百花洲 → 芙蓉街 → 千佛山','DAY 1 · 老城小巷与泉水茶馆。','DAY 2 · 清晨千佛山看城景，返京。'],['泰山组合线','济南 → 泰安 → 泰山','DAY 1 · 到泰安住一晚，晚上休息。','DAY 2 · 量力登泰山或索道上下，返程。'] ]},
+      {city:'邯郸', code:'HANDAN', km:440, mode:'高铁', modes:['高铁','自驾'], tags:['成语之都','古城','石窟'], desc:'赵国故地的故事藏在城墙、古寺与日常生活中，适合用一趟旅程认识成语背后的现场。', intro:'把课本里的典故，走成一座城的真实轮廓。', booking:'广府古城可骑行环城；响堂山石窟注意开放时段。', key:'赵文化、古城、水镇、驴肉香。', routes:[['广府古城线','广府古城 → 弘济桥 → 城墙骑行','DAY 1 · 环城骑行，慢逛水街与古城。','DAY 2 · 赵王城遗址与市区美食，返京。'],['石窟寻访线','响堂山石窟 → 磁州窑博物馆','DAY 1 · 响堂山石窟，午后磁州窑。','DAY 2 · 邯郸市博物馆，午后高铁返京。'],['成语漫游线','丛台 → 学步桥 → 邯郸道','DAY 1 · 丛台与学步桥，城市散步。','DAY 2 · 赵苑与书店咖啡，返程。'] ]},
+      {city:'赤峰', code:'CHIFENG', km:470, mode:'自驾', modes:['自驾','大巴'], tags:['草原','地质','辽文化'], desc:'草原、沙地、岩层与辽文化相互交错，适合想把城市噪音彻底换掉的人。', intro:'往北开，风景会变得辽阔，也更需要给自己留出时间。', booking:'草原日照强、温差大；自驾提前加油并下载离线地图。', key:'草原、玉龙沙湖、辽文化、星空。', routes:[['草原星空线','乌兰布统周边 → 草原日落','DAY 1 · 自驾草原公路，住一晚看星空。','DAY 2 · 日出、轻徒步后返程。'],['沙湖轻探线','玉龙沙湖 → 赤峰市区','DAY 1 · 沙湖活动量力而行，晚住市区。','DAY 2 · 辽文化博物馆，午后返程。'],['文化地貌线','辽上京遗址 → 巴林石博物馆','DAY 1 · 遗址与草原公路。','DAY 2 · 看巴林石与市区美食，返京。'] ]},
+      {city:'白洋淀', code:'BAIYANGDIAN', km:160, mode:'自驾', modes:['自驾','高铁'], tags:['湿地','芦苇','水乡'], desc:'芦苇、水道与荷花组成北京南边最适合放空的水乡风景。', intro:'不必把日程排满，坐一次船、吃一顿鱼，就够像度假。', booking:'乘船受天气和水位影响；夏季注意防晒和防蚊。', key:'芦苇、荷花、船、鱼宴。', routes:[['水乡一日加住','码头乘船 → 荷花大观园 → 渔家菜','DAY 1 · 下午到达，坐船看水道与芦苇。','DAY 2 · 晨游湿地，午后返京。'],['亲子自然线','湿地科普 → 乘船 → 露营地','DAY 1 · 选择短船程与湿地科普点。','DAY 2 · 轻松早餐后返程。'],['雄安周边线','白洋淀 → 容城周边 → 返京','DAY 1 · 白洋淀水上行程。','DAY 2 · 城市漫步与咖啡，返京。'] ]},
+      {city:'灵寿', code:'LINGS HOU', km:310, mode:'自驾', modes:['自驾','大巴'], tags:['山谷','瀑布','轻徒步'], desc:'石家庄西北的山谷里有瀑布、清凉和不太拥挤的步道，适合朋友结伴自驾。', intro:'一脚油门往太行山里开，换一口山谷里的空气。', booking:'雨后山路湿滑；徒步鞋与防雨装备比漂亮衣服更重要。', key:'太行山、瀑布、农家菜、轻徒步。', routes:[['五岳寨山野线','五岳寨 → 山中民宿','DAY 1 · 早到景区，量力走主步道。','DAY 2 · 民宿早餐，慢慢下山返京。'],['漫山花谷线','漫山花溪谷 → 石家庄周边','DAY 1 · 溪谷散步、拍照与避暑。','DAY 2 · 轻松返京，避开晚高峰。'],['驼梁避暑线','驼梁 → 山间村落','DAY 1 · 驼梁登高，住山脚。','DAY 2 · 山村早餐后返程。'] ]}
+    ];
+    const researchedRoutes = {
+      '承德': [
+        {name:'外八庙 + 山庄经典线', spots:'普宁寺 → 须弥福寿之庙 → 避暑山庄 → 普陀宗乘之庙', source:'马蜂窝参考', sourceUrl:'https://itf.mafengwo.cn/client/note.php/info/?id=9208533', days:['DAY 1 · 抵达后游普宁寺与须弥福寿之庙，下午回市区休整。','DAY 2 · 避暑山庄宫殿区与湖区，午后转往普陀宗乘之庙后返京。']},
+        {name:'皇家承德深度线', spots:'避暑山庄 → 承德老城 → 普陀宗乘之庙 → 须弥福寿之庙', source:'马蜂窝参考', sourceUrl:'https://www.mafengwo.cn/xc/10432/', days:['DAY 1 · 抵达承德后逛老城与城隍庙，晚上品尝承德菜。','DAY 2 · 避暑山庄深度游，依次走宫殿区、湖区与平原区。','DAY 3 · 普陀宗乘之庙与须弥福寿之庙，下午返京。']},
+        {name:'山庄草原大环线', spots:'丰宁 → 乌兰布统草原 → 盘龙峡谷 → 公主湖 → 木兰围场 → 避暑山庄 → 外八庙', source:'马蜂窝参考', sourceUrl:'https://itf.mafengwo.cn/client/note.php/info/?id=24478324', days:['DAY 1 · 北京出发经丰宁进入草原，傍晚看草原日落。','DAY 2 · 乌兰布统草原环线，串联影视基地、草甸与观景路。','DAY 3 · 盘龙峡谷与公主湖轻徒步，傍晚前往木兰围场。','DAY 4 · 木兰围场晨景后转往承德，下午游避暑山庄。','DAY 5 · 外八庙择二参观，午后返京。']}
+      ],
+      '秦皇岛': [
+        {name:'山海关北戴河经典线', spots:'老龙头 → 山海关古城 → 北戴河湿地 → 鸽子窝公园 → 老虎石海上公园', source:'马蜂窝参考', sourceUrl:'https://itf.mafengwo.cn/client/note.php/info/?id=2842727', days:['DAY 1 · 北京出发后游老龙头与山海关古城，傍晚前往北戴河。','DAY 2 · 清晨鸽子窝看海，白天骑行海岸线，傍晚到老虎石看日落。','DAY 3 · 北戴河湿地与海边慢游，午后返京。']},
+        {name:'长城入海深度线', spots:'鸽子窝 → 东海滩 → 奥林匹克公园 → 老龙头 → 山海关 → 天下第一关 → 山海关古城', source:'马蜂窝参考', sourceUrl:'https://www.mafengwo.cn/xc/10209/', days:['DAY 1 · 抵达北戴河，下午走东海滩，傍晚海边散步。','DAY 2 · 清晨鸽子窝观日出，午后奥林匹克公园与街区慢游。','DAY 3 · 前往老龙头，看长城入海，入住山海关附近。','DAY 4 · 天下第一关、山海关古城与城墙串联游。','DAY 5 · 海边早餐与自由活动，错峰返京。']},
+        {name:'北戴河热门景点线', spots:'鸽子窝公园 → 老虎石海上公园 → 联峰山 → 碧螺塔海上酒吧公园', source:'穷游参考', sourceUrl:'https://place.qyer.com/beidaihe/', days:['DAY 1 · 下午抵达北戴河，老虎石海边散步，晚上逛碧螺塔周边。','DAY 2 · 清晨鸽子窝看日出，午后联峰山轻徒步。','DAY 3 · 海边骑行与咖啡休息，午后返京。']}
+      ],
+      '张家口': [
+        {name:'万龙日落滑雪线', spots:'万龙滑雪场 → 山顶观景区 → 日落小树林 → 夜场雪道 → 崇礼小镇', source:'穷游参考', sourceUrl:'https://biu.qyer.com/p/n_QiHhekDcORN0ir2Oc9gQ.html', days:['DAY 1 · 高铁抵达崇礼后进万龙雪场，下午熟悉雪道并看山间日落。','DAY 2 · 上午继续滑雪，午后在雪场咖啡区休息；体力允许可体验夜场。','DAY 3 · 崇礼小镇早午餐，整理装备后乘高铁返京。']}
+      ]
+    };
+    const guideCatalog = {
+      '承德': {mfw:'https://www.mafengwo.cn/xc/10432/',spots:'避暑山庄 → 普宁寺 → 普陀宗乘之庙 → 须弥福寿之庙 → 磬锤峰 → 双塔山 → 金山岭长城 → 木兰围场 → 塞罕坝 → 七星湖 → 御道口草原 → 乌兰布统 → 承德老城 → 武烈河'},
+      '天津': {mfw:'https://m.mafengwo.cn/mdd/10320',spots:'五大道 → 瓷房子 → 西开教堂 → 滨江道 → 意式风情区 → 海河 → 天津之眼 → 古文化街 → 鼓楼 → 西北角 → 天津博物馆 → 国家海洋博物馆 → 东疆亲海公园 → 盘山 → 独乐寺 → 黄崖关长城'},
+      '秦皇岛': {mfw:'https://www.mafengwo.cn/xc/10209/',spots:'鸽子窝公园 → 老虎石海上公园 → 联峰山 → 碧螺塔 → 阿那亚周边 → 黄金海岸 → 老龙头 → 天下第一关 → 山海关古城 → 角山长城 → 孟姜女庙 → 秦皇求仙入海处 → 奥林匹克公园 → 刘庄夜市 → 北戴河湿地'},
+      '张家口': {mfw:'https://www.mafengwo.cn/xc/11735/',spots:'草原天路 → 桦皮岭 → 野狐岭要塞 → 大境门 → 堡子里 → 鸡鸣驿古城 → 暖泉古镇 → 西古堡 → 蔚县玉皇阁 → 南安寺塔 → 万龙滑雪场 → 太舞滑雪小镇 → 密苑云顶乐园 → 闪电河湿地 → 滦河神韵 → 沽源坝上草原'},
+      '保定': {mfw:'https://itf.mafengwo.cn/client/note.php/info/?id=24592864',spots:'直隶总督署 → 古莲花池 → 西大街 → 大慈阁 → 保定博物馆 → 白石山 → 野三坡百里峡 → 鱼谷洞 → 易水湖 → 太行水镇 → 清西陵 → 狼牙山 → 满城汉墓 → 白洋淀'},
+      '唐山': {mfw:'https://www.mafengwo.cn/search/q.php?q=%E5%94%90%E5%B1%B1',spots:'唐山南湖 → 抗震纪念馆 → 开滦国家矿山公园 → 中国工业博物馆 → 清东陵 → 裕陵 → 定东陵 → 月坨岛 → 菩提岛 → 曹妃甸湿地 → 李大钊纪念馆 → 滦州古城 → 青山关 → 景忠山'},
+      '大同': {mfw:'https://www.mafengwo.cn/xc/11241/',spots:'云冈石窟 → 华严寺 → 善化寺 → 九龙壁 → 大同古城墙 → 鼓楼 → 法华寺 → 悬空寺 → 恒山 → 应县木塔 → 大同土林 → 大同博物馆 → 浑源古城 → 明堂遗址'},
+      '平遥': {mfw:'https://www.mafengwo.cn/xc/10547/',spots:'平遥古城墙 → 平遥县衙 → 日昇昌票号 → 协同庆票号 → 华北第一镖局 → 平遥文庙 → 城隍庙 → 清虚观 → 明清一条街 → 又见平遥 → 双林寺 → 镇国寺 → 王家大院 → 张壁古堡 → 乔家大院'},
+      '五台山': {mfw:'https://m.mafengwo.cn/gl/catalog/index?catalog_id=2168&id=1',spots:'五爷庙 → 塔院寺 → 显通寺 → 菩萨顶 → 殊像寺 → 黛螺顶 → 南山寺 → 龙泉寺 → 佛母洞 → 东台望海峰 → 北台叶斗峰 → 西台挂月峰 → 中台翠岩峰 → 南台锦绣峰 → 台怀镇'},
+      '沧州': {mfw:'https://itf.mafengwo.cn/client/guide.php/info/?cityid=14894&id=40154',spots:'南川老街 → 大运河 → 清风楼 → 沧州博物馆 → 沧州铁狮子 → 吴桥杂技大世界 → 东光铁佛寺 → 南大港湿地 → 河间府署 → 河间光明戏院 → 黄骅港 → 贝壳湖公园 → 纪晓岚文化园 → 单桥'},
+      '安阳': {mfw:'https://m.mafengwo.cn/localdeals/13805/',spots:'殷墟博物馆 → 妇好墓 → 殷墟宫殿宗庙遗址 → 中国文字博物馆 → 安阳博物馆 → 仓巷街 → 文峰塔 → 羑里城 → 岳飞庙 → 红旗渠 → 青年洞 → 太行大峡谷 → 桃花谷 → 王相岩 → 石板岩镇'},
+      '济南': {mfw:'https://itf.mafengwo.cn/client/guide.php/info/?cityid=11242&id=7882',spots:'趵突泉 → 五龙潭 → 黑虎泉 → 解放阁 → 泉城广场 → 大明湖 → 超然楼 → 曲水亭街 → 百花洲 → 芙蓉街 → 千佛山 → 洪家楼教堂 → 山东博物馆 → 灵岩寺 → 九如山'},
+      '邯郸': {mfw:'https://www.mafengwo.cn/xc/11732/',spots:'邯郸博物馆 → 丛台公园 → 武灵丛台 → 学步桥 → 回车巷 → 赵苑 → 赵王城遗址 → 广府古城 → 弘济桥 → 杨露禅故居 → 响堂山石窟 → 磁州窑博物馆 → 娲皇宫 → 黄粱梦吕仙祠'},
+      '赤峰': {mfw:'https://www.mafengwo.cn/search/q.php?q=%E8%B5%A4%E5%B3%B0',spots:'玉龙沙湖 → 红山文化博物馆 → 赤峰博物馆 → 贡格尔草原 → 达里诺尔湖 → 达达线 → 热阿线 → 黄岗梁 → 阿斯哈图石林 → 乌兰布统影视基地 → 将军泡子 → 公主湖 → 蛤蟆坝 → 五彩山 → 北沟'},
+      '白洋淀': {mfw:'https://www.mafengwo.cn/xc/10309/',spots:'白洋淀景区 → 荷花大观园 → 白洋淀文化苑 → 嘎子村 → 鸳鸯岛 → 异国风情园 → 安新码头 → 芦苇荡 → 雁翎队纪念馆 → 王家寨民俗村 → 雄安印象展览馆 → 悦容公园 → 雄安郊野公园 → 水上人家'},
+      '灵寿': {mfw:'https://itf.mafengwo.cn/client/note.php/info/?id=23796098',spots:'五岳寨 → 漫山花溪谷 → 驼梁 → 水泉溪 → 秋山 → 陈庄歼灭战陈列馆 → 横山湖 → 磁河湿地 → 织女山 → 磨子坨 → 花溪小镇 → 古中山国遗址 → 松阳河文化小镇 → 山中民宿'}
+    };
+    const qs = s => document.querySelector(s);
+    const chips = qs('#chips'); chips.innerHTML = places.map(p=>`<span class="chip">${p.city}</span>`).join('');
+    let current = places[0]; let routePage = 1; let routePageSize = 6;
+    const pick = list => list[Math.floor(Math.random()*list.length)];
+    const normalizeRoute = route => Array.isArray(route) ? {name:route[0],spots:route[1],days:route.slice(2),source:'站内组合',sourceUrl:null} : route;
+    const allSpotNames = place => [...new Set([
+      ...guideCatalog[place.city].spots.split(' → '),
+      ...place.routes.flatMap(route=>route[1].split(' → ')),
+      ...(researchedRoutes[place.city]||[]).flatMap(route=>route.spots.split(' → '))
+    ].filter(spot=>!/^(返京|回京)$/.test(spot)))];
+    function generatedRoutes(place) {
+      const spots=allSpotNames(place); const guide=guideCatalog[place.city]; const qyer=`https://search.qyer.com/index?wd=${encodeURIComponent(place.city)}`;
+      const themes=[
+        ['经典精华线',0,5],['人文地标线',2,5],['自然风光线',4,5],['周边自驾线',6,6],['轻松慢游线',8,4],
+        ['摄影日落线',10,5],['亲子体验线',1,4],['博物古迹线',3,5],['小众探索线',5,5],['五日全景线',7,7]
+      ];
+      return themes.map((theme,index)=>{ const [suffix,shift,size]=theme; const order=[...spots.slice(shift),...spots.slice(0,shift)]; const chosen=order.slice(0,Math.min(size,order.length)); const source=index%2===0?{name:'马蜂窝攻略重组',url:guide.mfw}:{name:'穷游攻略检索',url:qyer}; const d1=chosen.slice(0,2); const d2=chosen.slice(2,4); return {name:`${place.city}${suffix}`,spots:chosen.join(' → '),source:source.name,sourceUrl:source.url,days:[`DAY 1 · ${d1.join('、')}依次游览，傍晚安排当地街区与美食。`,`DAY 2 · ${d2.join('、')||`${place.city}城市漫游`}，按体力控制步行与换乘。`,`DAY 3 · 前往${chosen[4]||chosen[0]}深度游览，晚上回住宿地休息。`,`DAY 4 · ${chosen[5]?`串联${chosen[5]}与周边景点`:`选择一处博物馆或老街慢游`}，预留自由活动。`,`DAY 5 · ${chosen[6]?`游览${chosen[6]}后`:'上午自由探索，午餐后'}错峰返京。`]}; });
+    }
+    function buildRoutePool(place) { return [...generatedRoutes(place),...(researchedRoutes[place.city]||[]).map(normalizeRoute),...place.routes.map(normalizeRoute)]; }
+    function matchingPlaces() { const fixedMode=qs('#transport').value; const maxDistance=Number(qs('#maxDistance').value); return places.filter(place=>place.modes.includes(fixedMode) && place.km<=maxDistance); }
+    function syncDistanceControl() { const range=qs('#maxDistance'); const min=Number(range.min); const max=Number(range.max); const value=Number(range.value); range.style.setProperty('--range-progress',`${((value-min)/(max-min))*100}%`); qs('#distanceLimit').textContent=`≤ ${value} km`; }
+    const spotType = spot => /长城|寺|庙|古城|遗址|博物馆|票号|城墙|总督署|文庙|石窟|木塔|王城|桥/.test(spot) ? '人文古迹' : /山|谷|湖|湿地|草原|沙|海|瀑|泉|荷|花溪|天路|园/.test(spot) ? '自然风光' : /滑雪|温泉|夜市|小镇|水镇|咖啡|早市|风情区/.test(spot) ? '休闲体验' : '城市漫游';
+    function spotGuide(spot) { const type=spotType(spot); return type==='人文古迹'?{stay:'建议 2–3 小时',note:'看建筑、展陈与历史细节；热门时段建议提前预约。'}:type==='自然风光'?{stay:'建议预留半天',note:'按天气安排步行强度，带好防晒、防风或防滑装备。'}:type==='休闲体验'?{stay:'建议 1–2 小时',note:'适合安排在傍晚或行程间隙，预留往返交通时间。'}:{stay:'建议 1–2 小时',note:'放慢步行节奏，结合街区美食或周边小店一起体验。'}; }
+    function cityProfile(place) { const type=place.tags.join(' · '); const season=/滑雪/.test(type)?'雪季优先，冬季更适合':/海岸|草原|避暑|湿地|山野/.test(type)?'5–10 月更舒适':'春秋为宜，四季可安排'; const pace=place.km<=220?'2–3 天轻松出发':place.km<=360?'3–4 天更从容':'4–5 天深度体验'; return {type,season,pace}; }
+    function nightsLabel(days) { const d=Math.max(2,Math.min(5,Number(days)||2)); return `${d}天${d-1}夜`; }
+    function buildItinerary(route, place, totalDays) {
+      const itinerary=route.days.slice(0, totalDays); const routeSpots=route.spots.split(' → ');
+      const extraSpots=allSpotNames(place).filter(spot=>!routeSpots.includes(spot));
+      while (itinerary.length<totalDays) { const day=itinerary.length+1; const spot=extraSpots.shift(); itinerary.push(`DAY ${day} · ${spot ? `前往${spot}，午后安排深度游览与拍照时间。` : `${place.city}自由探索，按体力安排街区漫游、休息或采购伴手礼。`}`); }
+      return itinerary;
+    }
+    function completeDay(line, index, totalDays, city) { const [day,...parts]=line.split(' · '); const core=parts.join(' · '); const hasDeparture=/^(北京出发|从北京出发|抵达)/.test(core); const start=index===0?(hasDeparture?'上午：':'上午：从北京出发，抵达后'):'上午：'; const ending=/返京|返程/.test(core)?'':index===totalDays-1?' 下午：整理行李后返京。':` 晚上：回${city}市区或景区周边休息，品尝当地美食。`; return `${day} · ${start}${core}${ending}`; }
+    function render(place) {
+      current = place; const days = qs('#days').value; const duration=nightsLabel(days); const maxDays=Math.max(2,Math.min(5,Number(days)||2)); const fixedMode=qs('#transport').value; const displayMode=fixedMode==='大巴'?'公共交通':fixedMode;
+      const profile=cityProfile(place); qs('#headlineCity').textContent=place.city; qs('#resultIntro').textContent=place.intro; qs('#cityCode').textContent=place.code; qs('#place').textContent=place.city; qs('#description').textContent=place.desc; qs('#distance').textContent=place.km+' km'; qs('#duration').textContent=duration; qs('#mode').textContent=displayMode; qs('#booking').textContent=place.booking; qs('#keyword').textContent=place.key; qs('#tags').innerHTML=place.tags.map(t=>`<span>${t}</span>`).join(''); qs('#cityType').textContent=profile.type; qs('#bestSeason').textContent=profile.season; qs('#cityPace').textContent=profile.pace;
+      const spots=allSpotNames(place).slice(0,9); qs('#spotCount').textContent=`${spots.length} 个可选景点 · 含游玩建议`; qs('#spots').innerHTML=spots.map((spot,i)=>{ const guide=spotGuide(spot); return `<article class="spot"><span class="spot-kicker">STOP ${String(i+1).padStart(2,'0')}</span><strong>${spot}</strong><small>${spotType(spot)} · ${guide.stay}</small><p class="spot-note">${guide.note}</p></article>`}).join('');
+      const pool=buildRoutePool(place); const totalPages=Math.max(1,Math.ceil(pool.length/routePageSize)); routePage=Math.min(Math.max(routePage,1),totalPages); const start=(routePage-1)*routePageSize; const usable=pool.slice(start,start+routePageSize); const end=start+usable.length; qs('#routeLabel').textContent=`${place.city} · 第 ${start+1}–${end} 条 / 共 ${pool.length} 条`;
+      qs('#routes').innerHTML=usable.map((r,i)=>{ const days=buildItinerary(r,place,maxDays); const source=r.sourceUrl?`<a class="route-source" href="${r.sourceUrl}" target="_blank" rel="noopener">${r.source} ↗</a>`:`<span class="route-source">${r.source}</span>`; return `<article class="route-card"><div class="route-top"><div class="route-meta"><span class="route-no">ROUTE ${String(start+i+1).padStart(2,'0')}</span>${source}</div><span class="route-days">${duration}</span></div><h3>${r.name}</h3><div class="route-spots"><span>沿线景点</span><p>${r.spots}</p></div><div class="itinerary">${days.map((line,index)=>{let [d,...rest]=completeDay(line,index,days.length,place.city).split(' · '); return `<div class="day"><em>${d}</em><span>${rest.join(' · ')}</span></div>`}).join('')}</div><div class="route-advice"><span>出行：${displayMode} 从北京出发</span><span>住宿：${place.city}市区或景区周边</span></div><div class="route-foot"><span>适合 ${i%3===0?'第一次到访':i%3===1?'想多走一点':'慢慢体验'}</span><span>${displayMode} · ${place.km} km</span></div></article>`}).join('');
+      const pages=Array.from({length:totalPages},(_,i)=>i+1); qs('#pageButtons').innerHTML=pages.map(page=>`<button class="page-btn${page===routePage?' active':''}" type="button" data-page="${page}"${page===routePage?' aria-current="page"':''}>${page}</button>`).join('');
+      [qs('#winner'),qs('#routes')].forEach(el=>{el.classList.remove('fade'); void el.offsetWidth; el.classList.add('fade');});
+    }
+    function drawCity() { routePage=1; render(pick(matchingPlaces())); }
+    qs('#draw').addEventListener('click',drawCity); qs('#pageSize').addEventListener('change',event=>{ routePageSize=Number(event.target.value); routePage=1; render(current); }); qs('#pageButtons').addEventListener('click',event=>{ const button=event.target.closest('[data-page]'); if(!button)return; routePage=Number(button.dataset.page); render(current); qs('#routeSection').scrollIntoView({behavior:'smooth',block:'start'}); });
+    qs('#days').addEventListener('change',()=>render(current)); qs('#transport').addEventListener('change',drawCity); qs('#maxDistance').addEventListener('input',syncDistanceControl); qs('#maxDistance').addEventListener('change',drawCity); qs('#maxDistance').addEventListener('wheel',event=>{ event.preventDefault(); const range=event.currentTarget; event.deltaY>0?range.stepDown():range.stepUp(); range.dispatchEvent(new Event('input')); range.dispatchEvent(new Event('change')); },{passive:false}); syncDistanceControl(); render(current);
+  </script>
+</body>
+</html>
